@@ -1,7 +1,7 @@
 <%= form_with model: model do |f| %>
   <%= f.text_field :name, placeholder: "staging" %>
-  <%= f.text_field :install_image, placeholder: "ghcr.io/siderolabs/installer:v1.3.7", hint: "Gets passed into the --imagedisk argument for talosctl gen config." %>
-  <%= f.text_field :kubernetes_version, placeholder: "1.26.3", hint: "Gets passed into the --kubernetes-version argument for talosctl gen config." %>
+  <%= f.text_field :install_image, placeholder: "ghcr.io/siderolabs/installer:v1.4.5", hint: "Gets passed into the --imagedisk argument for talosctl gen config." %>
+  <%= f.text_field :kubernetes_version, placeholder: "1.27.2", hint: "Gets passed into the --kubernetes-version argument for talosctl gen config." %>
 
   <%= f.label :kubespan, class: "mb-5 block" do %>
     <h3 class="font-bold mb-1 text-gray-900">Enable Kubespan</h3>

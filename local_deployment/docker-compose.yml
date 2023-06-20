@@ -16,6 +16,7 @@ services:
       - .env
     environment:
       - DATABASE_URL=postgres://manager:${BASIC_AUTH_PASSWORD}@db:5432/db
+      - SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}
     depends_on:
       - db
     command: sh -c "bin/heroku-release && bin/rails server"
