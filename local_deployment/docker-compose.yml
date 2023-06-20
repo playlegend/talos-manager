@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=manager
+      - POSTGRES_PASSWORD=${BASIC_AUTH_PASSWORD}
+      - POSTGRES_DB=db
+    volumes:
+      - ./data:/var/lib/postgresql/data
+  talos-manager:
+    image: talos-manager:latest
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://manager:${BASIC_AUTH_PASSWORD}@db:5432/db
+    depends_on:
+      - db
+    command: sh -c "bin/heroku-release && bin/rails server"
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./key.pem:/root/ssl/key.pem
+      - ./cert.pem:/root/ssl/cert.pem
+    ports:
+      - "80:80" # Do not use in production
+      - "443:443"
+    depends_on:
+      - talos-manager
